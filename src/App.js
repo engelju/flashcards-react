@@ -1,43 +1,34 @@
-import React, { Component } from 'react';
-import { Button } from 'reactstrap';
+import React, { Component } from 'react'
+import { Container } from 'reactstrap'
+
+import QuestionnaireContainer from './questionnaire/QuestionnaireContainer'
+
+const Header = ({ title, subtitle }) => (
+  <div className="jumbotron"><h1>{title}</h1><h3>{subtitle}</h3></div>
+)
+
+const Footer = ({ message, q }) => (
+  <p>{message} with {q.length} questionnaires</p>
+)
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    // define init state (via json obj)
-    this.state = { counter: 0 }
-
-    // bind `this` context to functions
-    // this.increment = this.increment.bind(this)
-    // this.reset = this.reset.bind(this)
-  }
-
-  componentDidMount() {
-    this.timerId = setInterval(this.increment, 1000)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerId)
-  }
-
-  increment = () => {
-    this.setState({ counter: this.state.counter + 1 })
-  }
-
-  reset = () => {
-    this.setState({ counter: 0 })
-  }
-
   render() {
-    return(
-      <div>
-        <h1>{this.props.message} {this.state.counter}</h1>
-        <Button onClick={ this.increment } color="primary">INCR</Button>
-        <Button onClick={ this.reset }>RESET</Button>
-      </div>
-    )
+    return <Container className="App">
+      <Header title='Flashcard Client with React' subtitle='Version 1' />
+      <QuestionnaireContainer q={this.props.questionnaires}/>
+      <Footer message='@ The FHNW Team' q={this.props.questionnaires} />
+    </Container>
   }
+}
+
+App.defaultProps = {
+  questionnaires:[
+    {'id': 1, 'title': 'Test Title 1', 'description': 'Test Description 1'},
+    {'id': 2, 'title': 'Test Title 2', 'description': 'Test Description 2'},
+    {'id': 3, 'title': 'Test Title 3', 'description': 'Test Description 3'},
+    {'id': 4, 'title': 'Test Title 4', 'description': 'Test Description 4'},
+    {'id': 5, 'title': 'Test Title 5', 'description': 'Test Description 5'}
+  ]
 }
 
 export default App;
